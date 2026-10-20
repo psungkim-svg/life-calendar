@@ -1,6 +1,6 @@
 'use strict';
 // Release checklist: change this version, app.js APP_VERSION and version.json together.
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const PREFIX = 'haru-calendar-';
 const CACHE = PREFIX + VERSION;
 const FILES = ['./','./index.html','./style.css','./app.js','./manifest.json','./icon-192.png','./icon-512.png'];

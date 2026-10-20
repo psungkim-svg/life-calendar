@@ -1,8 +1,10 @@
 'use strict';
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.1.0';
+const APP_NAME = 'SK-달력';
 const DB_VERSION = 1;
 const $ = id => document.getElementById(id);
 let db, selected = dateKey(new Date()), shown = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+let suppressDateClickUntil = 0;
 let monthEvents = [], editingId = null, registration = null, remoteVersion = null, applyingUpdate = false;
 function dateKey(d) { return `${String(d.getFullYear()).padStart(4,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function parseDate(s) { const [y,m,d] = s.split('-').map(Number); const date = new Date(0); date.setFullYear(y,m-1,d); date.setHours(12,0,0,0); return date; }
@@ -68,7 +70,7 @@ async function render() {
     b.setAttribute('aria-label',`${day.getFullYear()}년 ${day.getMonth()+1}월 ${day.getDate()}일${counts.has(key)?', 일정 있음':''}`);
     const num = document.createElement('span'); num.textContent = day.getDate();
     const dot = document.createElement('span'); dot.className = `dot${counts.has(key)?'':' empty'}`; dot.setAttribute('aria-hidden','true');
-    b.append(num,dot); b.onclick = () => { selected=key; if(day.getMonth()!==shown.getMonth() || day.getFullYear()!==shown.getFullYear()) shown=new Date(day.getFullYear(),day.getMonth(),1); render(); };
+    b.append(num,dot); b.onclick = async () => { if(Date.now()<suppressDateClickUntil) return; selected=key; if(day.getMonth()!==shown.getMonth() || day.getFullYear()!==shown.getFullYear()) shown=new Date(day.getFullYear(),day.getMonth(),1); await render(); openEditor(); };
     $('days').append(b);
   }
   renderList();
@@ -135,6 +137,7 @@ function bindUI() {
   document.querySelectorAll('[data-version]').forEach(el=>el.textContent=el.classList.contains('settings-version')?`v${APP_VERSION}`:`버전 v${APP_VERSION}`);
   // The settings heading uses a nested span with the word '버전' outside it.
   document.querySelector('.settings-version [data-version]').textContent=`v${APP_VERSION}`;
+  $('appSignature').textContent=`${APP_NAME}-v${APP_VERSION}`;
   $('prev').onclick=()=>moveMonth(-1); $('next').onclick=()=>moveMonth(1);
   $('today').onclick=()=>{selected=dateKey(new Date()); shown=new Date(new Date().getFullYear(),new Date().getMonth(),1); render();};
   $('addEvent').onclick=()=>openEditor(); $('closeEvent').onclick=()=>$('eventDialog').close();
@@ -153,7 +156,7 @@ function bindUI() {
   $('persistButton').onclick=()=>storageStatus(true);$('checkUpdate').onclick=()=>checkUpdate(true);$('laterUpdate').onclick=()=>$('updateDialog').close();$('applyUpdate').onclick=applyUpdate;
   let touch=null; const calendar=document.querySelector('.calendar');
   calendar.addEventListener('touchstart',e=>{if(e.touches.length===1)touch={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
-  calendar.addEventListener('touchend',e=>{if(!touch)return;const dx=e.changedTouches[0].clientX-touch.x,dy=e.changedTouches[0].clientY-touch.y;touch=null;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.5)moveMonth(dx<0?1:-1);},{passive:true});
+  calendar.addEventListener('touchend',e=>{if(!touch)return;const dx=e.changedTouches[0].clientX-touch.x,dy=e.changedTouches[0].clientY-touch.y;touch=null;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.5){suppressDateClickUntil=Date.now()+450;moveMonth(dx<0?1:-1);}},{passive:true});
   calendar.addEventListener('touchcancel',()=>{touch=null;});
   function connection(){$('connection').textContent=navigator.onLine?'':'· 오프라인';} connection();window.addEventListener('online',connection);window.addEventListener('offline',connection);
 }
