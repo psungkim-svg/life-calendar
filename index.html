@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#153f35"><meta name="description" content="내 기기에 보관하는 나만의 달력과 일정">
+<link rel="manifest" href="./manifest.json"><link rel="icon" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="stylesheet" href="./style.css"><title>하루 · 나의 달력</title>
+<script defer src="./app.js"></script>
+</head>
+<body>
+<div class="app">
+<header class="brand"><span>하루 <span class="brand-sub">나의 달력</span></span><span class="private">● 내 기기에 보관</span></header>
+<main id="calendarView">
+<section class="calendar" aria-label="월별 달력">
+<div class="month-toolbar"><button id="prev" aria-label="이전 달">‹</button><h1 id="monthTitle"></h1><button id="next" aria-label="다음 달">›</button><button id="today" class="today-button">오늘</button></div>
+<div class="weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+<div id="days" class="days" aria-label="날짜 선택"></div>
+</section>
+<section class="agenda" aria-labelledby="selectedTitle"><div class="agenda-heading"><h2 id="selectedTitle"></h2><span id="eventCount"></span></div><div id="eventList" class="event-list" tabindex="0" aria-label="선택한 날의 일정 목록"></div><button id="addEvent" class="add-event">＋ 일정 추가</button></section>
+</main>
+<main id="settingsView" hidden><header class="settings-heading"><h1>설정</h1><p class="settings-version">버전 <span data-version>v1.0.0</span></p></header><section class="setting-card"><h2>내 데이터 보관</h2><p>일정은 이 브라우저의 기기 저장소에만 보관합니다.</p><p id="storageStatus" role="status">저장 상태 확인 중…</p><button id="persistButton">영구 저장 다시 요청</button></section><section class="setting-card"><h2>앱 업데이트</h2><p id="updateStatus" role="status">현재 설치된 버전입니다.</p><button id="checkUpdate">새 버전 확인</button></section><p class="warning">주의: 브라우저 데이터 삭제, 앱 삭제 또는 기기 분실 시 일정이 사라질 수 있습니다. 이 단계에는 백업 기능이 없습니다.</p></main>
+<nav class="tabs" aria-label="주 메뉴"><button id="calendarTab" class="active" aria-current="page"><span aria-hidden="true">▦</span>달력</button><button disabled><span aria-hidden="true">▤</span>기록장<small>준비 중</small></button><button disabled><span aria-hidden="true">?</span>질문<small>준비 중</small></button><button id="settingsTab"><span aria-hidden="true">⚙</span>설정<small data-version>버전 v1.0.0</small></button></nav>
+<footer>하루 · <span data-version>버전 v1.0.0</span><span id="connection"></span></footer>
+</div>
+<dialog id="eventDialog" aria-labelledby="formTitle"><form id="eventForm"><div class="dialog-top"><h2 id="formTitle">일정 추가</h2><button type="button" id="closeEvent" aria-label="입력창 닫기">✕</button></div><label>날짜<input id="eventDate" type="date" required min="0001-01-01" max="9999-12-31"></label><label>시간 <span class="optional">선택 사항</span><input id="eventTime" type="time"></label><label>제목<input id="eventTitle" maxlength="120" required placeholder="어떤 일정인가요?"></label><label>메모 <span class="optional">선택 사항</span><textarea id="eventMemo" rows="3" maxlength="10000" placeholder="기억할 내용을 적어 주세요"></textarea></label><p id="formError" class="error" role="alert"></p><div class="form-actions"><button type="button" id="deleteEvent" class="danger" hidden>삭제</button><button type="submit" class="primary">저장</button></div></form></dialog>
+<dialog id="deleteDialog" aria-labelledby="deleteTitle"><h2 id="deleteTitle">일정을 삭제할까요?</h2><p>삭제한 일정은 되돌릴 수 없습니다.</p><div class="form-actions"><button id="cancelDelete">취소</button><button id="confirmDelete" class="danger">삭제</button></div></dialog>
+<dialog id="updateDialog" aria-labelledby="updateTitle"><h2 id="updateTitle">새 버전이 있습니다</h2><ul id="updateNotes"></ul><p id="updateError" class="error" role="alert"></p><div class="form-actions"><button id="laterUpdate">나중에</button><button id="applyUpdate" class="primary">지금 업데이트</button></div></dialog>
+<dialog id="messageDialog" aria-labelledby="messageTitle"><h2 id="messageTitle">알림</h2><p id="messageText"></p><button id="closeMessage" class="primary">확인</button></dialog>
+</body></html>
