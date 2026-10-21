@@ -122,3 +122,11 @@ html,body{background:#102a43}.app{background:#102a43}
 .tabs button.active{background:#b30e19;color:#fff;font-weight:750}
 #settingsTab small{font-size:12px;font-weight:500;line-height:1}
 #settingsTab.active small{font-size:12px;font-weight:750}
+/* 1.4.3: OS theme hints are requests, not an Android navigation-bar API. */
+html,body,.app{background:#e71623}
+:root{color-scheme:light}
+/* One title plus a distinct +N on the same line; never a clipped second title. */
+.days .day .day-labels{display:flex!important;flex-direction:row!important;align-items:center;gap:2px;flex:0 0 18px;min-height:18px;height:18px;max-height:18px;overflow:hidden;width:100%}
+.days .day .day-labels .day-title{display:block!important;flex:1 1 auto;min-width:0;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;line-height:18px;max-height:18px!important;-webkit-line-clamp:unset;overflow-wrap:normal}
+.days .day .day-labels .day-more{display:block;flex:0 0 auto;line-height:16px;max-height:16px;padding:0 1px;border-radius:2px;background:#fff0d5;color:#563a00;white-space:nowrap}
+.days.tight-cells .day .day-labels{display:none!important}

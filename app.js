@@ -1,5 +1,5 @@
 'use strict';
-const APP_VERSION = '1.4.2';
+const APP_VERSION = '1.4.3';
 const APP_NAME = 'SK-달력';
 const DB_VERSION = 3;
 const $ = id => document.getElementById(id);
@@ -76,7 +76,7 @@ async function render() {
     b.setAttribute('aria-label',`${day.getFullYear()}년 ${day.getMonth()+1}월 ${day.getDate()}일${counts.has(key)?', 일정 있음':''}`);
     const num = document.createElement('span'); num.textContent = day.getDate();
     const dot = document.createElement('span'); dot.className = `dot${counts.has(key)?'':' empty'}`; dot.setAttribute('aria-hidden','true');
-    const labels=node('span',undefined,'day-labels');const cellEvents=monthEvents.filter(e=>e.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||''));for(const e of cellEvents.slice(0,2)){const label=node('span',e.title.replace(/^\[Google\] /,'').replace(/ \(한국 기준\)| \(미국 동부 기준\)/g,''),'day-title');label.style.color=eventColor(e);labels.append(label);}if(cellEvents.length>2)labels.append(node('span','+'+(cellEvents.length-2),'day-more'));b.append(num,labels,dot); b.onclick = async () => { if(monthAnimating || Date.now()<suppressDateClickUntil) return; selected=key; if(day.getMonth()!==shown.getMonth() || day.getFullYear()!==shown.getFullYear()) shown=new Date(day.getFullYear(),day.getMonth(),1); await render(); openEditor(); };
+    const labels=node('span',undefined,'day-labels');const cellEvents=monthEvents.filter(e=>e.date===key).sort((a,b)=>(a.time||'').localeCompare(b.time||''));for(const e of cellEvents.slice(0,1)){const label=node('span',e.title.replace(/^\[Google\] /,'').replace(/ \(한국 기준\)| \(미국 동부 기준\)/g,''),'day-title');label.style.color=eventColor(e);labels.append(label);}if(cellEvents.length>1){const more=node('span','+'+(cellEvents.length-1),'day-more');more.setAttribute('aria-label',`추가 일정 ${cellEvents.length-1}개`);labels.append(more);}b.append(num,labels,dot); b.onclick = async () => { if(monthAnimating || Date.now()<suppressDateClickUntil) return; selected=key; if(day.getMonth()!==shown.getMonth() || day.getFullYear()!==shown.getFullYear()) shown=new Date(day.getFullYear(),day.getMonth(),1); await render(); openEditor(); };
     $('days').append(b);
   }
   updateGridDensity();renderList();
