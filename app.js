@@ -1,5 +1,5 @@
 'use strict';
-const APP_VERSION = '1.4.1';
+const APP_VERSION = '1.4.2';
 const APP_NAME = 'SK-달력';
 const DB_VERSION = 3;
 const $ = id => document.getElementById(id);

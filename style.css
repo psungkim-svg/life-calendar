@@ -93,3 +93,32 @@ html,body{background:#102a43}.app{background:#102a43}
 
 /* 1.4.1: restore day agenda controls and consolidate updates. */
 .day-add-event{position:absolute;right:12px;bottom:12px;min-height:52px;padding:10px 18px;font-size:18px;border:0;border-radius:14px;background:var(--green);color:white;box-shadow:0 4px 12px #153f3524}.event-list{padding-bottom:78px}#appUpdate{margin-top:20px}#appUpdate .app-signature{margin-top:16px;padding-top:12px}#installUpdate{font-size:18px}#settingsTab small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 1.4.2: user-approved typography; these final rules override responsive type sizes. */
+.month-toolbar{height:39px;min-height:39px;padding:0 8px;gap:0;background:#e71623}
+.month-toolbar button,.month-toolbar>button:not(.today-button){height:39px;min-height:39px;padding:0 6px}
+#chooseMonth{align-items:center;min-width:0}
+#monthTitle{display:flex;align-items:baseline;gap:8px;line-height:1;white-space:nowrap}
+#monthTitle small{display:inline;font-size:17px;font-weight:550;line-height:1.15}
+#monthTitle strong{display:inline;font-size:25px;font-weight:700;line-height:1.15}
+.weekdays{font-size:18px;font-weight:700}
+.days .day,.days .day.sun,.days .day.sat{font-size:25px;font-weight:500}
+.days .day.outside:not(.sun):not(.sat){font-size:25px;font-weight:400}
+.days .day-title{font-size:15px;font-weight:700}
+.days .day-more{font-size:11px;font-weight:700}
+#today{font-size:18px;font-weight:400}
+#addTopEvent{font-size:25px;font-weight:700}
+#selectedTitle{font-size:20px;font-weight:700}
+#eventCount{font-size:16px;font-weight:400}
+#agendaMode{font-size:19px;font-weight:650}
+.event-name{font-size:18px;font-weight:700}
+.event-time,.event-memo{font-size:18px;font-weight:400}
+.event-source{font-size:14px;font-weight:400}
+.dday{font-size:22px;font-weight:500}
+#addEvent{font-size:18px;font-weight:400}
+#googleCalendarBar{font-size:14px;font-weight:400}
+#upcomingBanner{font-size:15px;font-weight:400}
+.tabs{height:33.6px;min-height:33.6px;max-height:33.6px;padding:0 8px;background:#e71623;border-top:0}
+.tabs button{height:33.6px;min-height:33.6px;padding:1px 0;gap:0;border-radius:5px;background:transparent;color:#fff;font-size:18px;font-weight:500;line-height:1}
+.tabs button.active{background:#b30e19;color:#fff;font-weight:750}
+#settingsTab small{font-size:12px;font-weight:500;line-height:1}
+#settingsTab.active small{font-size:12px;font-weight:750}
